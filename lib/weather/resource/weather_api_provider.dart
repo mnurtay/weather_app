@@ -8,7 +8,7 @@ class WeatherApiProvider {
     Response response;
     try {
       response = await get(
-        '$API_URL/weather?q=$cityName&appid=$API_KEY&lang=ru&units=metric',
+        '$API_URL/weather?q=$cityName&appid=$API_ID&lang=ru&units=metric',
       );
     } catch (e) {
       throw ("Нет соединения с интернетом. Проверьте соединение и попробуйте снова");
@@ -23,7 +23,7 @@ class WeatherApiProvider {
     Response response;
     try {
       response = await get(
-        '$API_URL/forecast?q=$cityName&appid=$API_KEY&lang=ru&units=metric',
+        '$API_URL/forecast?q=$cityName&appid=$API_ID&lang=ru&units=metric',
       );
     } catch (e) {
       throw ("Нет соединения с интернетом. Проверьте соединение и попробуйте снова");
