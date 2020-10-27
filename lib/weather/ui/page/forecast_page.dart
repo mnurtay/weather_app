@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_screenutil/screenutil.dart';
 import 'package:weather_app/config.dart';
 import 'package:weather_app/weather/bloc/weather_bloc.dart';
-import 'package:weather_app/weather/ui/widget/weather_data.dart';
+import 'package:weather_app/weather/model/Weather.dart';
+import 'package:weather_app/weather/ui/widget/forecast_data.dart';
 
-class WeatherPage extends StatefulWidget {
+class ForecastPage extends StatefulWidget {
+  final Weather weather;
+
+  const ForecastPage({Key key, @required this.weather}) : super(key: key);
   @override
-  _WeatherPageState createState() => _WeatherPageState();
+  _ForecastPageState createState() => _ForecastPageState();
 }
 
-class _WeatherPageState extends State<WeatherPage> {
+class _ForecastPageState extends State<ForecastPage> {
+  Weather get weather => widget.weather;
   WeatherBloc weatherBloc;
 
   @override
   void initState() {
     weatherBloc = WeatherBloc();
-    weatherBloc.add(GetWeatherEvent());
+    weatherBloc.add(GetForecastWeatherEvent(weather.city));
     super.initState();
   }
 
@@ -33,13 +38,15 @@ class _WeatherPageState extends State<WeatherPage> {
 
     return Scaffold(
       appBar: buildAppBar(),
+      backgroundColor: Color(0xFF00587a),
       body: BlocBuilder(
         cubit: weatherBloc,
         builder: (context, state) {
           if (state is LoadingWeatherState) return buildLoading();
           if (state is FailureWeatherState) return buildFailure(state.error);
-          if (state is FetchedWeathersState)
-            return WeatherData(list: state.list);
+          if (state is FetchedForecastState)
+            return ForecastData(
+                weather: weather, forecastList: state.forecastList);
           return Container();
         },
       ),
@@ -66,8 +73,9 @@ class _WeatherPageState extends State<WeatherPage> {
 
   Widget buildAppBar() {
     return AppBar(
-      backgroundColor: Color(0xFF16697a),
-      title: Text('Прогноз погоды'),
+      backgroundColor: Color(0xFF00587a),
+      elevation: 2,
+      title: Text(weather.city),
     );
   }
 }
