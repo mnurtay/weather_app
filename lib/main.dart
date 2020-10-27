@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weather_app/weather/ui/page/weather_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,7 +15,11 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Scaffold(appBar: AppBar()),
+      onGenerateRoute: (settings) {
+        Widget page = Scaffold();
+        if (settings.name == '/') page = WeatherPage();
+        return MaterialPageRoute(builder: (context) => page);
+      },
     );
   }
 }
