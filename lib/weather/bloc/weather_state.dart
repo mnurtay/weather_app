@@ -26,7 +26,4 @@ class FetchedForecastState extends WeatherState {
 
 class NotFoundWeatherState extends WeatherState {}
 
-class FetchedWeatherState extends WeatherState {
-  final Weather weather;
-  FetchedWeatherState(this.weather);
-}
+class FetchedWeatherState extends WeatherState {}

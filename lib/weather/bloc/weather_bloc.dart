@@ -52,11 +52,22 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
     if (event is AddCityWeatherEvent) {
       yield LoadingWeatherState();
       try {
-        final weather = await _repository.fetchWeather(event.city);
+        List objectList = await _repository.getWeathers();
+        List<Weather> list = Weather.parseList(objectList);
+        bool isExist = false;
+        for (var item in list) {
+          if (item.city == event.city) {
+            isExist = true;
+            break;
+          }
+        }
+        Weather weather;
+        if (isExist) await _repository.updateAll();
+        if (!isExist) weather = await _repository.fetchWeather(event.city);
         if (weather == null) {
           yield NotFoundWeatherState();
         } else {
-          yield FetchedWeatherState(weather);
+          yield FetchedWeatherState();
         }
       } catch (e) {
         yield FailureWeatherState(e.toString());
