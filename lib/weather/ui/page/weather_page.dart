@@ -28,9 +28,16 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var width = DEVICE_WIDTH;
+    var height = DEVICE_HEIGHT;
+    if (shortestSide > 600) {
+      width = TABLET_WIDTH;
+      height = TABLET_HEIGHT;
+    }
     ScreenUtil.init(context,
-        designSize: Size(DEVICE_WIDTH, DEVICE_HEIGHT), allowFontScaling: true);
-
+        designSize: Size(width, height), allowFontScaling: true);
+        
     return Scaffold(
       appBar: buildAppBar(),
       body: BlocBuilder(
@@ -66,8 +73,18 @@ class _WeatherPageState extends State<WeatherPage> {
 
   Widget buildAppBar() {
     return AppBar(
-      backgroundColor: Color(0xFF16697a),
+      backgroundColor: Theme.of(context).primaryColor,
       title: Text('Прогноз погоды'),
+      leading: IconButton(
+        icon: Icon(Icons.add),
+        iconSize: ScreenUtil().setSp(50),
+        onPressed: () {
+          Navigator.pushNamed(context, '/add_page').then((value) {
+            if (value == null) return;
+            weatherBloc.add(GetWeatherEvent());
+          });
+        },
+      ),
     );
   }
 }

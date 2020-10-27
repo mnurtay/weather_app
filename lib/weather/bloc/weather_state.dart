@@ -23,3 +23,10 @@ class FetchedForecastState extends WeatherState {
   final ForecastList forecastList;
   FetchedForecastState(this.forecastList);
 }
+
+class NotFoundWeatherState extends WeatherState {}
+
+class FetchedWeatherState extends WeatherState {
+  final Weather weather;
+  FetchedWeatherState(this.weather);
+}

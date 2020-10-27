@@ -32,6 +32,7 @@ class WeatherRepository {
     ]);
     Map weatherObject = requests[0];
     Map forecastObject = requests[1];
+    if (weatherObject == null) return null;
     await saveCityWeather(cityName, weatherObject);
     await saveForecastWeather(cityName, forecastObject);
     return Weather.parseMap(weatherObject);

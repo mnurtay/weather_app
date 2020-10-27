@@ -49,5 +49,18 @@ class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
       }
       yield FetchedForecastState(forecast);
     }
+    if (event is AddCityWeatherEvent) {
+      yield LoadingWeatherState();
+      try {
+        final weather = await _repository.fetchWeather(event.city);
+        if (weather == null) {
+          yield NotFoundWeatherState();
+        } else {
+          yield FetchedWeatherState(weather);
+        }
+      } catch (e) {
+        yield FailureWeatherState(e.toString());
+      }
+    }
   }
 }

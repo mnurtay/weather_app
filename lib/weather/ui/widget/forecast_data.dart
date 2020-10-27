@@ -26,7 +26,7 @@ class _ForecastDataState extends State<ForecastData> {
     return Container(
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: ScreenUtil().setHeight(70)),
             buildDescription(),
@@ -89,7 +89,7 @@ class _ForecastDataState extends State<ForecastData> {
 
   Widget buildGeneral() {
     return Container(
-      width: ScreenUtil().setWidth(DEVICE_WIDTH),
+      width: ScreenUtil().screenWidth,
       margin: EdgeInsets.symmetric(
         horizontal: ScreenUtil().setWidth(30),
       ),

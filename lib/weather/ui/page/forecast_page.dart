@@ -33,12 +33,19 @@ class _ForecastPageState extends State<ForecastPage> {
 
   @override
   Widget build(BuildContext context) {
+    var shortestSide = MediaQuery.of(context).size.shortestSide;
+    var width = DEVICE_WIDTH;
+    var height = DEVICE_HEIGHT;
+    if (shortestSide > 600) {
+      width = TABLET_WIDTH;
+      height = TABLET_HEIGHT;
+    }
     ScreenUtil.init(context,
-        designSize: Size(DEVICE_WIDTH, DEVICE_HEIGHT), allowFontScaling: true);
+        designSize: Size(width, height), allowFontScaling: true);
 
     return Scaffold(
       appBar: buildAppBar(),
-      backgroundColor: Color(0xFF00587a),
+      backgroundColor: Theme.of(context).primaryColor,
       body: BlocBuilder(
         cubit: weatherBloc,
         builder: (context, state) {
@@ -73,7 +80,7 @@ class _ForecastPageState extends State<ForecastPage> {
 
   Widget buildAppBar() {
     return AppBar(
-      backgroundColor: Color(0xFF00587a),
+      backgroundColor: Theme.of(context).primaryColor,
       elevation: 2,
       title: Text(weather.city),
     );

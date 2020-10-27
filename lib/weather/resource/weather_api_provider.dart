@@ -13,9 +13,9 @@ class WeatherApiProvider {
     } catch (e) {
       throw ("Нет соединения с интернетом. Проверьте соединение и попробуйте снова");
     }
-    if (response.statusCode != 200) {
+    if (response.statusCode == 404) return null;
+    if (response.statusCode != 200)
       throw ('повторите попытку позже возникла внутренняя проблема');
-    }
     return json.decode(utf8.decode(response.bodyBytes));
   }
 
@@ -28,9 +28,9 @@ class WeatherApiProvider {
     } catch (e) {
       throw ("Нет соединения с интернетом. Проверьте соединение и попробуйте снова");
     }
-    if (response.statusCode != 200) {
+    if (response.statusCode == 404) return null;
+    if (response.statusCode != 200)
       throw ('повторите попытку позже возникла внутренняя проблема');
-    }
     return json.decode(utf8.decode(response.bodyBytes));
   }
 }

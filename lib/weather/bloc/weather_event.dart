@@ -11,3 +11,8 @@ class GetForecastWeatherEvent extends WeatherEvent {
   final String city;
   GetForecastWeatherEvent(this.city);
 }
+
+class AddCityWeatherEvent extends WeatherEvent {
+  final String city;
+  AddCityWeatherEvent(this.city);
+}
